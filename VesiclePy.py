@@ -5,22 +5,25 @@ import ndio.remote.OCPMeta as NDLIMS
 
 
 
-def fetch_data():
+def fetch_data(zStart, zEnd, padX, padY, padZ):
 oo = OCP()
 nn = NDLIMS()
 
 # see list of tokens
 # tokens = oo.get_public_tokens()
 
-token = 'cv_kasthuri11_vesicle_2014'
-channel = 'annotation'
+# image
+eData = oo.get_cutout('kasthuri11cc', 'image', 4400 - padX, 5424 + padX, 5440 - padY, 6464 + padY, 1100 - padZ, 1200 + padZ, resolution = 1)
 
-nn.get_metadata(token)
+# synapse
+sData = oo.get_cutout('ac3ac4', 'ac4_synapse_truth', resolution = 1)
 
+# membranes
+mData = oo.get_cutout('cv_kasthuri11_membrane_2014', 'image', resolution = 1)
 
-vesicle_annos = oo.get_cutout(token, channel, 694, 1794, 1750, 2640, 1004, 1154, resolution=1)
-vesicle_image = oo.get_cutout('kasthuri11cc', 'image', 694, 1794, 1750, 2640, 1004, 1154, resolution=1)
-synapse_annos = oo.get_cutout('kasthuri2015_ramon_v1', 'synapses', 694, 1794, 1750, 2640, 1004, 1154, resolution=1)
+# vesicles
+vData = oo.get_cutout('cv_kasthuri11_membrane_2014', 'annotation', resolution = 1)
+
 
 def versiclerf_train(outputFile):
 
