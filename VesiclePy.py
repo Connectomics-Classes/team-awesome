@@ -3,7 +3,7 @@ import ndio
 import ndio.remote.OCP as OCP
 import ndio.remote.OCPMeta as NDLIMS
 import numpy as np
-import h5py
+from sklearn.ensemble import RandomForestClassifier
 
 eDataTrain = None
 mDataTrain = None
@@ -21,13 +21,13 @@ def get_ac4_data(zStart, zEnd, padX, padY, padZ):
 	eDataTrain = oo.get_cutout('kasthuri11cc', 'image', 4400 - padX, 5424 + padX, 5440 - padY, 6464 + padY, 1100 - padZ, 1200 + padZ, resolution = 1)
 
 	# synapse
-	sDataTrain = oo.get_cutout('ac3ac4', 'ac4_synapse_truth', resolution = 1)
+	sDataTrain = oo.get_cutout('ac3ac4', 'ac4_synapse_truth', 4400 - padX, 5424 + padX, 5440 - padY, 6464 + padY, 1100 - padZ, 1200 + padZ, resolution = 1)
 
 	# membranes
-	mDataTrain = oo.get_cutout('cv_kasthuri11_membrane_2014', 'image', resolution = 1)
+	mDataTrain = oo.get_cutout('cv_kasthuri11_membrane_2014', 'image', 4400 - padX, 5424 + padX, 5440 - padY, 6464 + padY, 1100 - padZ, 1200 + padZ, resolution = 1)
 
 	# vesicles
-	vDataTrain = oo.get_cutout('cv_kasthuri11_membrane_2014', 'annotation', resolution = 1)
+	vDataTrain = oo.get_cutout('cv_kasthuri11_membrane_2014', 'annotation', 4400 - padX, 5424 + padX, 5440 - padY, 6464 + padY, 1100 - padZ, 1200 + padZ, resolution = 1)
 
 
 def versiclerf_train(outputFile):
@@ -62,9 +62,16 @@ def versiclerf_train(outputFile):
     #	200, floor(sqrt(size(trainFeat, 2))));
 
 	print "training complete"
-	# figure, bar(classifier.importance), drawnow
 
 	save(outputFile, 'classifier')
+
+def main():
+
+	sys.exit();
+
+if __name__ == '__main__':
+    main()
+
 
 
 
