@@ -36,10 +36,11 @@ def main():
 	xTest = vesicle_feats(eDataTest)
 
 	yTrain = sDataTrain
+	yTest = sDataTest
 
 	# train classifier
 	clf = RandomForestClassifier(n_estimators = 2)
-	clf.fit(xTrain, sDataTrain)
+	clf.fit(xTrain, yTrain)
 	clf_probs = clf.predict_proba(xTest)
 	y_score = clf.decision_funciton(xTest)
 
@@ -47,10 +48,11 @@ def main():
 	# percision = dict()
 	# recall = dict()
 	# average_precision = dict()
+	# n_classes = 2
 	# for i in range(n_classes):
-    	# precision[i], recall[i], _ = precision_recall_curve(y_test[:, i],
-        #                                                 	y_score[:, i])
-    	# average_precision[i] = average_precision_score(y_test[:, i], y_score[:, i])
+    	# precision[i], recall[i], _ = precision_recall_curve(yTest[:, i],
+        #                                                 	yScore[:, i])
+    	# average_precision[i] = average_precision_score(yTest[:, i], yScore[:, i])
 
     # Plot Precision-Recall curve
 	# plt.clf()
