@@ -1,7 +1,12 @@
 import download
 import vesiclerf_feats
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import average_precision_score
+
+import matplotlib.pyplot as plt
+
 
 def main():
 	zStart = 1000
@@ -36,6 +41,28 @@ def main():
 	clf = RandomForestClassifier(n_estimators = 2)
 	clf.fit(xTrain, sDataTrain)
 	clf_probs = clf.predict_proba(xTest)
+	y_score = clf.decision_funciton(xTest)
+
+	# Compute Percision-Recall and plot curve
+	# percision = dict()
+	# recall = dict()
+	# average_precision = dict()
+	# for i in range(n_classes):
+    	# precision[i], recall[i], _ = precision_recall_curve(y_test[:, i],
+        #                                                 	y_score[:, i])
+    	# average_precision[i] = average_precision_score(y_test[:, i], y_score[:, i])
+
+    # Plot Precision-Recall curve
+	# plt.clf()
+	# plt.plot(recall[0], precision[0], label='Precision-Recall curve')
+	# plt.xlabel('Recall')
+	# plt.ylabel('Precision')
+	# plt.ylim([0.0, 1.05])
+	# plt.xlim([0.0, 1.0])
+	# plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision[0]))
+	# plt.legend(loc="lower left")
+	# plt.show()
+
 	sys.exit();
 
 if __name__ == '__main__':
