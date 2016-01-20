@@ -45,25 +45,25 @@ def main():
 	y_score = clf.decision_funciton(xTest)
 
 	# Compute Percision-Recall and plot curve
-	# percision = dict()
-	# recall = dict()
-	# average_precision = dict()
-	# n_classes = 2
-	# for i in range(n_classes):
-    	# precision[i], recall[i], _ = precision_recall_curve(yTest[:, i],
-        #                                                 	yScore[:, i])
-    	# average_precision[i] = average_precision_score(yTest[:, i], yScore[:, i])
+	percision = dict()
+	recall = dict()
+	average_precision = dict()
+	n_classes = 2
+
+	for i in range(n_classes):
+		precision[i], recall[i], _ = precision_recall_curve(yTest[:, i], yScore[:, i])
+		average_precision[i] = average_precision_score(yTest[:, i], yScore[:, i])
 
     # Plot Precision-Recall curve
-	# plt.clf()
-	# plt.plot(recall[0], precision[0], label='Precision-Recall curve')
-	# plt.xlabel('Recall')
-	# plt.ylabel('Precision')
-	# plt.ylim([0.0, 1.05])
-	# plt.xlim([0.0, 1.0])
-	# plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision[0]))
-	# plt.legend(loc="lower left")
-	# plt.show()
+	plt.clf()
+	plt.plot(recall[0], precision[0], label='Precision-Recall curve')
+	plt.xlabel('Recall')
+	plt.ylabel('Precision')
+	plt.ylim([0.0, 1.05])
+	plt.xlim([0.0, 1.0])
+	plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision[0]))
+	plt.legend(loc="lower left")
+	plt.show()
 
 	sys.exit();
 
