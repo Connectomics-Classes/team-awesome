@@ -1,4 +1,5 @@
-import download
+# import download
+import scipy.io as sio
 import vesiclerf_feats
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -18,10 +19,18 @@ def main():
 	# should become 2 for max data size later
 	sample_split = 100
 
+	# fetch standalone data
+	data = sio.loadmat('standalone-data.mat')
+	eData = data['em']
+	sData = data['synapseTruth']
+	print eData
+	print sData
+	sys.exit()
+	# fetch data from the server
 	# em image
-	eData = download.fetch_image(zStart, zStop, padX, padY, padZ)
+	# eData = download.fetch_image(zStart, zStop, padX, padY, padZ)
 	# synapse image
-	sData = download.fetch_synapse(zStart, zStop, padX, padY, padZ)
+	# sData = download.fetch_synapse(zStart, zStop, padX, padY, padZ)
 
 	# split into training & testing sets
 	es = np.array_split(eData, sample_split)
@@ -32,8 +41,8 @@ def main():
 	sDataTest = ss[1]
 
 	# extract feature
-	xTrain = vesicle_feats(eDataTrain)
-	xTest = vesicle_feats(eDataTest)
+	xTrain = vesiclerf_feats.vesiclerf_feats(eDataTrain)
+	xTest = vesiclerf_feats.vesiclerf_feats(eDataTest)
 
 	yTrain = sDataTrain
 	yTest = sDataTest
