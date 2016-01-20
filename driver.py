@@ -1,4 +1,5 @@
 # import download
+import sys
 import scipy.io as sio
 import vesiclerf_feats
 import numpy as np
@@ -23,9 +24,6 @@ def main():
 	data = sio.loadmat('standalone-data.mat')
 	eData = data['em']
 	sData = data['synapseTruth']
-	print eData
-	print sData
-	sys.exit()
 	# fetch data from the server
 	# em image
 	# eData = download.fetch_image(zStart, zStop, padX, padY, padZ)
@@ -42,16 +40,17 @@ def main():
 
 	# extract feature
 	xTrain = vesiclerf_feats.vesiclerf_feats(eDataTrain)
+	yTrain = np.ravel(np.reshape(sDataTrain, (sDataTrain.size, 1)))
+	
 	xTest = vesiclerf_feats.vesiclerf_feats(eDataTest)
-
-	yTrain = sDataTrain
-	yTest = sDataTest
+	yTest = np.ravel(np.reshape(sDataTest, (sDataTest.size, 1)))
 
 	# train classifier
-	clf = RandomForestClassifier(n_estimators = 2)
+	clf = RandomForestClassifier(n_estimators = 10)
 	clf.fit(xTrain, yTrain)
 	clf_probs = clf.predict_proba(xTest)
-	y_score = clf.decision_funciton(xTest)
+	print clf_probs
+	sys.exit()
 
 	# Compute Percision-Recall and plot curve
 	percision = dict()
@@ -66,6 +65,10 @@ def main():
     # Plot Precision-Recall curve
 	plt.clf()
 	plt.plot(recall[0], precision[0], label='Precision-Recall curve')
+	print "recall"
+	print recall[0]
+	print "percision"
+	print percision[0]
 	plt.xlabel('Recall')
 	plt.ylabel('Precision')
 	plt.ylim([0.0, 1.05])

@@ -20,8 +20,6 @@
 import numpy as np
 from scipy import ndimage
 
-#np = NP()
-
 def vesiclerf_feats(em):
   #return value
   xt = [] 
@@ -33,15 +31,17 @@ def vesiclerf_feats(em):
   B2 = np.ones([25,25,5])/(25*25*5)
 
   ### Intensity Feats ###
-  #find weighted average of features
+  # find weighted average of features
   I0 = ndimage.convolve(em,B0,mode='constant')
   I2 = ndimage.convolve(em,B1,mode='constant')
 
-  #reshape data
-  I0 = [np.reshape(I0,(I0.size,1)), num_features]
-  I2 = [np.reshape(I2,(I2.size,1)), num_features]
-  
-  xt.append(I0)
-  xt.append(I2)
+  # reshape data
+  # I0 = [np.reshape(I0,(I0.size,1)).tolist(), num_features]
+  # I2 = [np.reshape(I2,(I2.size,1)).tolist(), num_features]
+  # I0 = np.reshape(I0,(I0.size,1))
+  I2 = np.reshape(I2,(I2.size,1))
+  xt = I2
+  #xt.append(I0)
+  #xt.append(I2)
 
   return xt
