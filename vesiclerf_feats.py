@@ -17,10 +17,10 @@
 #   - Matrix (NxD) containing features for N idxToTest datapoints and D features.
 #
 
-import numpy as NP
+import numpy as np
 from scipy import ndimage
 
-np = NP()
+#np = NP()
 
 def vesiclerf_feats(em):
   #return value
