@@ -49,8 +49,9 @@ def main():
 	clf = RandomForestClassifier(n_estimators = 10)
 	clf.fit(xTrain, yTrain)
 	clf_probs = clf.predict_proba(xTest)
-	print clf_probs
-	sys.exit()
+	yResult = clf.predict(xTest)
+	# sys.exit()
+	# yScore = clf.fit(xTrain, yTrain).decision_function(xTest)
 
 	# Compute Percision-Recall and plot curve
 	percision = dict()
@@ -59,8 +60,8 @@ def main():
 	n_classes = 2
 
 	for i in range(n_classes):
-		precision[i], recall[i], _ = precision_recall_curve(yTest[:, i], yScore[:, i])
-		average_precision[i] = average_precision_score(yTest[:, i], yScore[:, i])
+		precision[i], recall[i], _ = precision_recall_curve(yTest[:, i], yResult[:, i])
+		average_precision[i] = average_precision_score(yTest[:, i], yResult[:, i])
 
     # Plot Precision-Recall curve
 	plt.clf()
