@@ -74,8 +74,8 @@ def main():
 	print precision
 	plt.xlabel('Recall')
 	plt.ylabel('Precision')
-	plt.ylim([0.0, 1.05])
-	plt.xlim([0.0, 1.0])
+	plt.ylim([0, 0.01])
+	plt.xlim([0, 1])
 	plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision))
 	plt.legend(loc="lower left")
 	plt.show()

@@ -45,7 +45,8 @@
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
 
-
+\usepackage{graphicx}
+\graphicspath{ {figures} }
 
 \title{Mapping the Brain: An Introduction to Connectomics\\vesiclePy}
 \author{Zhou Li, Jizhou Xu, Mary Yen}
@@ -57,17 +58,14 @@
 
 \section{Abstract}
 
-We have a program capable of mapping the human brain by vesicle clustering available in Matlab. However, this code has many Matlab dependencies and isn't as open-sourced and fast as Python code. Therefore, converting this code into Python code is viable. There are some challenges in that Matlab doesn't translate directly into Python due to differences in data format and dependencies, but we still were able to find a basic pipeline that is able to perform the basic detection actions by using the Python scikit library, RandomForestClassifier to aid in the classifying process of the program. For future work, we would like to do a more complete conversion of vesiclePy. Due to the large size of the program and our team's infamiliarity with Matlab, doing a basic pipeline was the most realistic gaol for a three week course. With more time, we would like to properly learn the algorithms that the Matlab code uses and attempt to improve the code if possible using Python libraries.
+We have a program capable of mapping the human brain by vesicle clustering available in Matlab. However, this code has many Matlab dependencies and isn't as open-sourced as Python code. Therefore, converting this code into Python code is viable. There are some challenges in that Matlab doesn't translate directly into Python due to differences in data format and dependencies, but we still were able to find a basic pipeline that is able to perform the basic detection actions by using the Python scikit-learn library, RandomForestClassifier to aid in the classifying process of the program. For future work, we would like to do a more complete conversion of vesiclePy. Due to the large size of the program, the complexity of the data, and our team's unfamiliarity with Matlab, doing a basic pipeline was the most realistic goal for a three week course. With more time, we would like to properly learn the algorithms that the Matlab code uses and attempt to improve the code if possible using Python libraries.
 
 \section{Results}
 
-Here you should detail what came from your project (i.e. what data do you have to show for your work). Here you should include a qualitative and numerical description of the results themselves, as well as at least 1 \emph{good} figure. A \emph{good} figure means one that displays data both clearly, effectively, and aesthetically. This can be a difficult thing to do, so if you have questions don't be afraid to ask us. \\
-
-This whole final report should be no longer than 1 page of writing, and no more than 2 full pages with the figure(s) (include them as an appendix). Of course, don't forget references (those of you using LaTeX can grab the proposal template for how to use insert the references again).\\
-
-Good luck!
-
-The current code takes data that 
+Due to a server problem, the current code takes data from a standalone .mat file, but the Python package does have APIs for downloading data from the ndio server. After splitting the data into a training data set and a testing data set, our programing creates the feature vector by doing calculations with the image data, and then constructs the label vector from the synapses truth data. Because of our unfamiliarity with Matlab, we couldn't perfectly mimic the Matlab implementation on creating the labels, but we have created a skeleton Python file for it for the future. Now, we have all we need for fitting a scikit-learn random forest classifier.\\\\
+The mean classification accuracy on the given test data and labels we got was around 99\%. However, since there is only a very small number of synapses in each image, the accuracy here doesn't tell us a lot. We then proceed to calculate the precision and recall of our classifier.\\\\
+\includegraphics[width=\textwidth]{figures/precision-recall-plot.png}\\\\
+We suspect that the reason why the precision is very small is because we only used intensity features for training, and our label generation method is kind of brute-force.
 
 \end{document}
 
