@@ -24,6 +24,8 @@ def main():
 	data = sio.loadmat('standalone-data.mat')
 	eData = data['em']
 	sData = data['synapseTruth']
+	# mData 
+
 	# fetch data from the server
 	# em image
 	# eData = download.fetch_image(zStart, zStop, padX, padY, padZ)
@@ -40,41 +42,41 @@ def main():
 
 	# extract feature
 	xTrain = vesiclerf_feats.vesiclerf_feats(eDataTrain)
-	yTrain = np.ravel(np.reshape(sDataTrain, (sDataTrain.size, 1)))
-	
 	xTest = vesiclerf_feats.vesiclerf_feats(eDataTest)
+
+	# create labels
+	# pad = [50, 50, 2]
+	# pixValid = find_valid_pixels[mData]
+	# yTrain = create_labels_pixel(np.ravel(np.reshape(sDataTrain, (sDataTrain.size, 1))), pixValid, pad)
+
+	yTrain = np.ravel(np.reshape(sDataTrain, (sDataTrain.size, 1)))
+	yTrain[yTrain != 0] = 1
 	yTest = np.ravel(np.reshape(sDataTest, (sDataTest.size, 1)))
+	yTest[yTest != 0] = 1
+
 
 	# train classifier
 	clf = RandomForestClassifier(n_estimators = 10)
 	clf.fit(xTrain, yTrain)
-	clf_probs = clf.predict_proba(xTest)
 	yResult = clf.predict(xTest)
-	# sys.exit()
-	# yScore = clf.fit(xTrain, yTrain).decision_function(xTest)
+	clf_probs = clf.predict_proba(xTest)[:, 1]
 
 	# Compute Percision-Recall and plot curve
-	percision = dict()
-	recall = dict()
-	average_precision = dict()
-	n_classes = 2
-
-	for i in range(n_classes):
-		precision[i], recall[i], _ = precision_recall_curve(yTest[:, i], yResult[:, i])
-		average_precision[i] = average_precision_score(yTest[:, i], yResult[:, i])
+	precision, recall, thresholds = precision_recall_curve(yTest, clf_probs)
+	average_precision = average_precision_score(yTest, clf_probs)
 
     # Plot Precision-Recall curve
 	plt.clf()
-	plt.plot(recall[0], precision[0], label='Precision-Recall curve')
+	plt.plot(recall, precision, label='Precision-Recall curve')
 	print "recall"
-	print recall[0]
-	print "percision"
-	print percision[0]
+	print recall
+	print "precision"
+	print precision
 	plt.xlabel('Recall')
 	plt.ylabel('Precision')
 	plt.ylim([0.0, 1.05])
 	plt.xlim([0.0, 1.0])
-	plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision[0]))
+	plt.title('Precision-Recall example: AUC={0:0.2f}'.format(average_precision))
 	plt.legend(loc="lower left")
 	plt.show()
 
