@@ -12,7 +12,7 @@ https://www.lucidchart.com/invitations/accept/35f091a9-71ee-476a-8900-138160cea5
 Build
 -----
 The code should be directly importable as Python modules.
-If you want to run a quick example from the command line:
+If you want to run a quick example from the command line, assuming you have numpy, scipy, and sklearn installed already, simply do:
 ```console
 python driver.py
 ```
